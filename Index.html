@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroid Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Asteroid Search</h1>
+    <form id="search-form">
+        <label for="target-ores">Target Ores (comma-separated):</label>
+        <input type="text" id="target-ores" name="target-ores" required>
+        <label for="origin-gps">Origin GPS:</label>
+        <input type="text" id="origin-gps" name="origin-gps" required>
+        <label for="max-distance">Max Distance (meters):</label>
+        <input type="number" id="max-distance" name="max-distance" value="0">
+        <label for="amount">Number of Results:</label>
+        <input type="number" id="amount" name="amount" value="5" min="1">
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+    <script src="script.js"></script>
+</body>
+</html>
