@@ -4,22 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asteroid Search</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .result-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .result-item p {
+            margin: 5px 0;
+        }
+        .distance {
+            font-weight: bold;
+            color: #007BFF;
+        }
+    </style>
 </head>
 <body>
-    <h1>Asteroid Search</h1>
+
     <form id="search-form">
         <label for="target-ores">Target Ores (comma-separated):</label>
-        <input type="text" id="target-ores" name="target-ores" required>
-        <label for="origin-gps">Origin GPS:</label>
-        <input type="text" id="origin-gps" name="origin-gps" required>
-        <label for="max-distance">Max Distance (meters):</label>
-        <input type="number" id="max-distance" name="max-distance" value="0">
+        <input type="text" id="target-ores" required>
+        <br>
+        <label for="origin-gps">Origin GPS (Region:Type:X:Y:Z):</label>
+        <input type="text" id="origin-gps" required>
+        <br>
+        <label for="max-distance">Max Distance:</label>
+        <input type="number" id="max-distance" required>
+        <br>
         <label for="amount">Number of Results:</label>
-        <input type="number" id="amount" name="amount" value="5" min="1">
+        <input type="number" id="amount" required>
+        <br>
         <button type="submit">Search</button>
     </form>
+
     <div id="results"></div>
+
     <script src="script.js"></script>
+
 </body>
 </html>
