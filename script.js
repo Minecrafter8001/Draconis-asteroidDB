@@ -5,19 +5,27 @@ async function fetchCSV() {
 }
 
 function parseCSV(data) {
-    const rows = data.split('\n').slice(1);
-    return rows.map(row => {
-        const cols = row.split(',');
-        return {
-            Region: cols[0],
-            Type: cols[1],
-            Composition: cols[2],
-            X: parseFloat(cols[3]),
-            Y: parseFloat(cols[4]),
-            Z: parseFloat(cols[5]),
-            Color: cols[6]
-        };
-    });
+    const rows = data.split('\n').slice(1); // Split by newlines and skip the header
+    return rows
+        .map(row => row.trim()) // Trim whitespace from each row
+        .filter(row => row.length > 0) // Skip empty rows
+        .map(row => {
+            const cols = row.split(',');
+            if (cols.length < 7) {
+                console.warn('Skipping incomplete row:', row);
+                return null; // Skip rows with fewer than 7 columns
+            }
+            return {
+                Region: cols[0],
+                Type: cols[1],
+                Composition: cols[2],
+                X: parseFloat(cols[3]),
+                Y: parseFloat(cols[4]),
+                Z: parseFloat(cols[5]),
+                Color: cols[6]
+            };
+        })
+        .filter(asteroid => asteroid !== null); // Remove null entries
 }
 
 function calculateDistance(x, y, z, originX, originY, originZ) {
@@ -26,7 +34,13 @@ function calculateDistance(x, y, z, originX, originY, originZ) {
 
 function filterAndSortAsteroids(asteroids, targetOres, originX, originY, originZ, maxDistance, amount) {
     return asteroids
-        .filter(asteroid => targetOres.some(ore => asteroid.Composition.includes(ore)))
+        .filter(asteroid => {
+            if (!asteroid.Composition) {
+                console.warn('Missing Composition for asteroid:', asteroid);
+                return false;
+            }
+            return targetOres.some(ore => asteroid.Composition.includes(ore));
+        })
         .map(asteroid => {
             const distance = calculateDistance(asteroid.X, asteroid.Y, asteroid.Z, originX, originY, originZ);
             return { ...asteroid, distance };
