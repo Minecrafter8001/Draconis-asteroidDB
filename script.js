@@ -54,9 +54,18 @@ function displayResults(results) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = results.map((result, index) => {
         const distanceOutput = result.distance > 1000 ? `${(result.distance / 1000).toFixed(2)} km` : `${result.distance.toFixed(0)} m`;
-        return `<p>${index + 1}. Distance: ${distanceOutput} | GPS:${result.Region} ${result.Type} ${result.Composition}:${result.X}:${result.Y}:${result.Z}:${result.Color}</p>`;
+        return `
+            <div class="result-item">
+                <p><span class="distance">${index + 1}. Distance: ${distanceOutput}</span></p>
+                <p>GPS: <span>${result.Region} ${result.Type}</span></p>
+                <p>Composition: <span>${result.Composition}</span></p>
+                <p>Coordinates: <span>${result.X}, ${result.Y}, ${result.Z}</span></p>
+                <p>Color: <span style="color:${result.Color};">${result.Color}</span></p>
+            </div>
+        `;
     }).join('');
 }
+
 
 document.getElementById('search-form').addEventListener('submit', async (event) => {
     event.preventDefault();
